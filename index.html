@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Cómo eres? — Espagnol 5e</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--fs:20px;--teal:#1f6f78;--teal-l:#e3f1f2;--creme:#fdf8ec;--encre:#1f1a14;
+  --masc:#1f5fbf;--fem:#c2185b;--es:#6b3fa0;--tiene:#1e8a4c;--lleva:#c76a00;--ok:#1e8a4c;--ko:#c0392b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--creme);color:var(--encre);font-family:"Atkinson Hyperlegible",sans-serif;font-size:var(--fs);line-height:1.6;letter-spacing:.03em;word-spacing:.1em}
+h1,h2,h3{font-family:Lexend,sans-serif;margin:0}
+header{background:var(--teal);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+header h1{font-size:1.3em}
+.outils{display:flex;gap:6px}
+.outils button{background:#fff;color:var(--teal);border:none;border-radius:10px;padding:6px 12px;font:700 .85em Lexend;cursor:pointer;min-width:44px;min-height:44px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;background:var(--creme);position:sticky;top:0;z-index:5;border-bottom:2px solid #eadfc6}
+nav button{flex:0 0 auto;border:2px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:8px 14px;font:700 .8em Lexend;cursor:pointer}
+nav button.on{background:var(--teal);color:#fff}
+main{max-width:820px;margin:0 auto;padding:14px 14px 70px}
+section{display:none}section.on{display:block}
+.card{background:#fff;border-radius:18px;padding:18px;margin-bottom:14px;border:2px solid #eadfc6}
+h2{color:var(--teal);font-size:1.15em;margin-bottom:10px}
+.consigne{background:var(--teal-l);border-radius:12px;padding:10px 14px;font-weight:700;margin-bottom:14px}
+.masc{color:var(--masc)}.fem{color:var(--fem)}
+.v-es{color:var(--es)}.v-tiene{color:var(--tiene)}.v-lleva{color:var(--lleva)}
+.son{border:none;background:var(--teal);color:#fff;border-radius:50%;width:44px;height:44px;font-size:1.05em;cursor:pointer;flex:0 0 auto}
+.btn{border:none;border-radius:14px;padding:12px 18px;font:700 .9em Lexend;cursor:pointer;background:var(--teal);color:#fff;min-height:48px}
+.btn.sec{background:#fff;color:var(--teal);border:2px solid var(--teal)}
+.fb{min-height:1.6em;font-weight:700;margin-top:10px}.fb.ok{color:var(--ok)}.fb.ko{color:var(--ko)}
+
+/* mots */
+.cat{margin-bottom:16px}
+.cat h3{font-size:.95em;margin-bottom:6px}
+.mot{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #e5ddcc}
+.mot .es{font-weight:700;flex:1}
+.mot .fr{color:#6a5f50;font-size:.85em}
+.pic{width:36px;text-align:center;font-size:1.3em}
+
+/* verbes */
+.verbe{border:3px solid;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.verbe.es{border-color:var(--es);background:#f3eefa}.verbe.tiene{border-color:var(--tiene);background:#eaf6ef}.verbe.lleva{border-color:var(--lleva);background:#fdf1e3}
+.verbe .t{font:700 1.05em Lexend}
+.ex{display:flex;align-items:center;gap:10px;margin-top:6px;font-size:1.05em}
+
+/* persos */
+.persos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.perso{background:#fff;border:3px solid #eadfc6;border-radius:16px;padding:10px;text-align:center;cursor:pointer}
+.perso svg{display:block;margin:0 auto}
+.perso .nom{font:700 1em Lexend}
+.desc{margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--teal-l);font-size:1.05em;display:none}
+.desc.on{display:flex;gap:10px;align-items:flex-start}
+
+/* jeux */
+.prog{height:12px;background:#eadfc6;border-radius:99px;overflow:hidden;margin-bottom:12px}
+.prog div{height:100%;background:var(--teal);width:0;transition:width .3s}
+.phrase{font-size:1.1em;padding:12px 14px;background:var(--teal-l);border-radius:14px;display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+.choix4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.choix4 button{background:#fff;border:3px solid #eadfc6;border-radius:14px;padding:6px;cursor:pointer}
+.choix4 button.good,.oa button.good{border-color:var(--ok);background:#dff3e6}
+.choix4 button.bad,.oa button.bad{border-color:var(--ko);background:#fbe0dc}
+.oa{display:flex;gap:14px;justify-content:center;margin-top:10px}
+.oa button{font:700 1.6em Lexend;width:84px;height:84px;border-radius:18px;border:3px solid #eadfc6;background:#fff;cursor:pointer}
+.mot-oa{text-align:center;font:700 1.8em Lexend;margin:8px 0}
+.mot-oa .trou{display:inline-block;min-width:40px;border-bottom:4px solid var(--teal)}
+.zone{min-height:62px;border:3px dashed var(--teal);border-radius:14px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;background:#fff}
+.tuiles{display:flex;flex-wrap:wrap;gap:8px}
+.tuile{background:#fff;border:2px solid #b9a98a;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;min-height:46px}
+.zone .tuile{background:var(--teal-l);border-color:var(--teal)}
+
+/* créateur */
+.crea{display:grid;grid-template-columns:180px 1fr;gap:14px;align-items:start}
+.opt{margin-bottom:10px}
+.opt .lab{font-weight:700;font-size:.85em;margin-bottom:4px}
+.opt .bs{display:flex;flex-wrap:wrap;gap:6px}
+.opt .bs button{border:2px solid #b9a98a;background:#fff;border-radius:10px;padding:6px 10px;font:700 .8em "Atkinson Hyperlegible";cursor:pointer;min-height:42px}
+.opt .bs button.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.sortie{margin-top:12px;padding:12px 14px;background:var(--teal-l);border-radius:14px;font-size:1.05em;display:flex;gap:10px}
+.memo{background:var(--teal);color:#fff;border-radius:14px;padding:12px 14px}
+.memo b{color:#ffe08a}
+@media(max-width:560px){.crea{grid-template-columns:1fr}.crea .apercu{display:flex;justify-content:center}.choix4{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🇪🇸 ¿Cómo eres?</h1>
+  <div class="outils">
+    <button id="aMoins" aria-label="Texte plus petit">A−</button>
+    <button id="aPlus" aria-label="Texte plus grand">A+</button>
+  </div>
+</header>
+<nav id="nav">
+  <button data-s="mots" class="on">1. Les mots</button>
+  <button data-s="phrase">2. La phrase</button>
+  <button data-s="persos">3. Personnages</button>
+  <button data-s="quien">4. ¿Quién es?</button>
+  <button data-s="oa">5. -o ou -a ?</button>
+  <button data-s="construis">6. Construis</button>
+  <button data-s="crea">7. Mon perso</button>
+</nav>
+<main>
+
+<section id="mots" class="on"><div class="card">
+  <h2>1. J'écoute et je répète</h2>
+  <div class="consigne">🔊 Touche le bouton, écoute, puis répète le mot à voix haute.</div>
+  <div id="listeMots"></div>
+  <p style="font-size:.9em">🔵 <b class="masc">-o</b> = garçon &nbsp; 🔴 <b class="fem">-a</b> = fille</p>
+</div></section>
+
+<section id="phrase"><div class="card">
+  <h2>2. Je fais une phrase avec 3 verbes</h2>
+  <div class="verbe es"><div class="t">ES = il / elle est</div>la taille, le corps, la couleur des cheveux
+    <div class="ex"><button class="son" data-say="Luis es alto, delgado y moreno.">🔊</button><span>Luis <b class="v-es">es</b> alt<b class="masc">o</b>, delgad<b class="masc">o</b> y moren<b class="masc">o</b>.</span></div></div>
+  <div class="verbe tiene"><div class="t">TIENE = il / elle a</div>les yeux
+    <div class="ex"><button class="son" data-say="Luis tiene los ojos negros.">🔊</button><span>Luis <b class="v-tiene">tiene</b> los ojos negros.</span></div></div>
+  <div class="verbe lleva"><div class="t">LLEVA = il / elle porte</div>les lunettes, la barbe
+    <div class="ex"><button class="son" data-say="Ana lleva gafas.">🔊</button><span>Ana <b class="v-lleva">lleva</b> gafas.</span></div></div>
+  <div class="card" style="border-style:dashed">💇 Cheveux → <b>con el pelo…</b>
+    <div class="ex"><button class="son" data-say="Isa es castaña con el pelo largo y ondulado.">🔊</button><span>Isa es castañ<b class="fem">a</b> <b>con el pelo</b> largo y ondulado.</span></div></div>
+  <div class="card" style="border-style:dashed">🚫 Pour dire non → <b>no</b> devant le verbe
+    <div class="ex"><button class="son" data-say="Isa no lleva gafas.">🔊</button><span>Isa <b>no</b> lleva gafas.</span></div></div>
+  <div class="card" style="border-style:dashed">❓ <b>¿Cómo eres?</b> = Comment es-tu ? → <b>Soy</b> alto.<br>❓ <b>¿Cómo es?</b> = Comment est-il / elle ? → <b>Es</b> alta.</div>
+  <div class="memo">🧠 <b>Mémo :</b> 1. <b>ES</b> → 2. <b>TIENE</b> → 3. <b>LLEVA</b></div>
+</div></section>
+
+<section id="persos"><div class="card">
+  <h2>3. Les personnages</h2>
+  <div class="consigne">👆 Touche un personnage pour lire et écouter sa description.</div>
+  <div class="persos" id="grillePersos"></div>
+  <div class="desc" id="descPerso"></div>
+</div></section>
+
+<section id="quien"><div class="card">
+  <h2>4. ¿Quién es? — Qui est-ce ?</h2>
+  <div class="consigne">🔊 Écoute ou lis la phrase, puis touche le bon personnage.</div>
+  <div class="prog"><div id="qProg"></div></div>
+  <div id="qZone"></div>
+</div></section>
+
+<section id="oa"><div class="card">
+  <h2>5. -o ou -a ?</h2>
+  <div class="consigne">👀 Regarde : garçon ou fille ? Choisis la bonne fin du mot.</div>
+  <div class="prog"><div id="oaProg"></div></div>
+  <div id="oaZone"></div>
+</div></section>
+
+<section id="construis"><div class="card">
+  <h2>6. Je construis la phrase</h2>
+  <div class="consigne">🧩 Touche les mots dans le bon ordre. Touche un mot posé pour l'enlever.</div>
+  <div class="prog"><div id="cProg"></div></div>
+  <div id="cZone"></div>
+</div></section>
+
+<section id="crea"><div class="card">
+  <h2>7. Je crée mon personnage</h2>
+  <div class="consigne">🎨 Choisis, regarde ton personnage changer, puis écoute sa description.</div>
+  <div class="crea">
+    <div class="apercu" id="crApercu"></div>
+    <div id="crOpts"></div>
+  </div>
+  <div class="sortie"><button class="son" id="crSon">🔊</button><span id="crTxt"></span></div>
+  <p style="font-size:.9em;margin-top:12px">✏️ <b>Défi :</b> fais ton propre portrait, puis recopie la phrase dans ton cahier en remplaçant <b>es</b> par <b>soy</b> et <b>tiene</b> par <b>tengo</b>.</p>
+</div></section>
+</main>
+
+<script>/* Dessine un personnage en SVG à partir de ses caractéristiques */
+const PELO_COL={moreno:"#2b1d14",rubio:"#f2c94c",pelirrojo:"#d4572a",castano:"#8a5a2b"};
+const OJO_COL={negros:"#1a1a1a",azules:"#2f80ed",verdes:"#1e9e57",marrones:"#7b4a1e"};
+function avatar(p,size){
+  size=size||160;
+  const g=p.sexo==="f";
+  const H=p.talla==="alto"?178:132;
+  const ground=192, top=ground-H, hx=60, hy=top+18, r=15;
+  const hair=PELO_COL[p.pelo], eye=OJO_COL[p.ojos];
+  const fat=p.cuerpo==="gordito";
+  const torsoTop=hy+r+3, torsoH=H*0.36, torsoBot=torsoTop+torsoH;
+  const skin="#f6d2b4", shirt=g?"#e8a3c0":"#8fb8e8", stroke="#3a2a20";
+  let s=`<svg viewBox="0 0 120 200" width="${size*0.6}" height="${size}" xmlns="http://www.w3.org/2000/svg">`;
+  // cheveux longs derrière la tête
+  if(p.largo==="largo"){
+    if(p.forma==="ondulado") s+=`<path d="M${hx-r-3} ${hy-4} Q${hx-r-10} ${hy+15} ${hx-r-2} ${hy+25} Q${hx-r-9} ${hy+35} ${hx-r} ${hy+44} L${hx+r} ${hy+44} Q${hx+r+9} ${hy+35} ${hx+r+2} ${hy+25} Q${hx+r+10} ${hy+15} ${hx+r+3} ${hy-4} Z" fill="${hair}"/>`;
+    else if(p.forma==="rizado"){for(let i=0;i<7;i++){s+=`<circle cx="${hx-r-2}" cy="${hy+i*6}" r="6" fill="${hair}"/><circle cx="${hx+r+2}" cy="${hy+i*6}" r="6" fill="${hair}"/>`;}}
+    else s+=`<rect x="${hx-r-3}" y="${hy-6}" width="${2*r+6}" height="50" rx="6" fill="${hair}"/>`;
+  }
+  // jambes
+  const legTop=torsoBot-2;
+  s+=`<line x1="${hx-7}" y1="${legTop}" x2="${hx-9}" y2="${ground}" stroke="${stroke}" stroke-width="5" stroke-linecap="round"/>`;
+  s+=`<line x1="${hx+7}" y1="${legTop}" x2="${hx+9}" y2="${ground}" stroke="${stroke}" stroke-width="5" stroke-linecap="round"/>`;
+  // bras
+  const aw=fat?30:20;
+  s+=`<line x1="${hx-aw+6}" y1="${torsoTop+8}" x2="${hx-aw-8}" y2="${torsoTop+torsoH*0.75}" stroke="${skin}" stroke-width="6" stroke-linecap="round"/>`;
+  s+=`<line x1="${hx+aw-6}" y1="${torsoTop+8}" x2="${hx+aw+8}" y2="${torsoTop+torsoH*0.75}" stroke="${skin}" stroke-width="6" stroke-linecap="round"/>`;
+  // corps
+  if(fat) s+=`<ellipse cx="${hx}" cy="${torsoTop+torsoH/2}" rx="27" ry="${torsoH/2+2}" fill="${shirt}" stroke="${stroke}" stroke-width="2"/>`;
+  else s+=`<rect x="${hx-12}" y="${torsoTop}" width="24" height="${torsoH}" rx="8" fill="${shirt}" stroke="${stroke}" stroke-width="2"/>`;
+  if(g){const w=fat?30:22; s+=`<path d="M${hx-w+6} ${torsoBot-6} L${hx+w-6} ${torsoBot-6} L${hx+w+4} ${torsoBot+18} L${hx-w-4} ${torsoBot+18} Z" fill="${shirt}" stroke="${stroke}" stroke-width="2"/>`;}
+  // cou + tête
+  s+=`<circle cx="${hx}" cy="${hy}" r="${r}" fill="${skin}" stroke="${stroke}" stroke-width="2"/>`;
+  // barbe
+  if(p.barba) s+=`<path d="M${hx-r+1} ${hy+2} Q${hx} ${hy+r+16} ${hx+r-1} ${hy+2} Q${hx} ${hy+10} ${hx-r+1} ${hy+2} Z" fill="${hair}"/>`;
+  // yeux
+  s+=`<circle cx="${hx-6}" cy="${hy-1}" r="3.4" fill="#fff"/><circle cx="${hx+6}" cy="${hy-1}" r="3.4" fill="#fff"/>`;
+  s+=`<circle cx="${hx-6}" cy="${hy-1}" r="2.4" fill="${eye}"/><circle cx="${hx+6}" cy="${hy-1}" r="2.4" fill="${eye}"/>`;
+  // bouche
+  if(!p.barba) s+=`<path d="M${hx-5} ${hy+7} Q${hx} ${hy+11} ${hx+5} ${hy+7}" stroke="${stroke}" stroke-width="1.6" fill="none" stroke-linecap="round"/>`;
+  else s+=`<path d="M${hx-4} ${hy+7} Q${hx} ${hy+9} ${hx+4} ${hy+7}" stroke="#fff" stroke-width="1.4" fill="none"/>`;
+  // lunettes
+  if(p.gafas) s+=`<g stroke="#222" stroke-width="1.6" fill="none"><circle cx="${hx-6}" cy="${hy-1}" r="5.5"/><circle cx="${hx+6}" cy="${hy-1}" r="5.5"/><line x1="${hx-0.5}" y1="${hy-1}" x2="${hx+0.5}" y2="${hy-1}"/></g>`;
+  // cheveux dessus
+  if(p.forma==="rizado"){for(let a=-170;a<=-10;a+=20){const rad=a*Math.PI/180;s+=`<circle cx="${hx+Math.cos(rad)*(r+1)}" cy="${hy+Math.sin(rad)*(r+1)}" r="${p.largo==='largo'?6:7}" fill="${hair}"/>`;}}
+  else if(p.forma==="ondulado") s+=`<path d="M${hx-r-2} ${hy-1} Q${hx-r} ${hy-r-6} ${hx} ${hy-r-4} Q${hx+r} ${hy-r-6} ${hx+r+2} ${hy-1} Q${hx+8} ${hy-12} ${hx+2} ${hy-8} Q${hx-6} ${hy-13} ${hx-r-2} ${hy-1} Z" fill="${hair}"/>`;
+  else s+=`<path d="M${hx-r-1} ${hy} Q${hx-r} ${hy-r-5} ${hx} ${hy-r-3} Q${hx+r} ${hy-r-5} ${hx+r+1} ${hy} L${hx+r-2} ${hy-8} L${hx-r+2} ${hy-8} Z" fill="${hair}"/>`;
+  s+=`<line x1="10" y1="${ground+3}" x2="110" y2="${ground+3}" stroke="#d8c9a8" stroke-width="3" stroke-linecap="round"/>`;
+  return s+"</svg>";
+}
+/* Phrase espagnole + version colorée (masculin bleu / féminin rose / verbes) */
+function accord(base,f){return f?base.replace(/o$/,"a"):base;}
+function descr(p,html){
+  const f=p.sexo==="f";
+  const C=(w)=>{ if(!html) return w; const m=w.match(/^(.*?)(o|a|os|as)$/); return w; };
+  const end=(w)=>{ if(!html) return w; return w.replace(/(o|a)$/,m=>`<b class="${m==='a'?'fem':'masc'}">${m}</b>`); };
+  const V=(w,c)=>html?`<b class="v-${c}">${w}</b>`:w;
+  const peloW={moreno:"moreno",rubio:"rubio",pelirrojo:"pelirrojo",castano:"castaño"}[p.pelo];
+  let t=`${p.nombre} ${V("es","es")} ${end(accord(p.talla,f))}, ${end(accord(p.cuerpo,f))}, ${end(accord(peloW,f))} con el pelo ${p.largo} y ${p.forma}. `;
+  t+=`${V("Tiene","tiene")} los ojos ${p.ojos}`;
+  const acc=[]; if(p.gafas)acc.push("gafas"); if(p.barba)acc.push("barba");
+  if(acc.length) t+=` y ${V("lleva","lleva")} ${acc.join(" y ")}.`; else t+=`. ${V("No lleva","lleva")} gafas.`;
+  return t;
+}
+const PERSOS=[
+ {nombre:"Luis",sexo:"m",talla:"alto",cuerpo:"delgado",pelo:"moreno",largo:"corto",forma:"rizado",ojos:"negros",gafas:false,barba:false},
+ {nombre:"Ana",sexo:"f",talla:"bajo",cuerpo:"gordito",pelo:"rubio",largo:"largo",forma:"liso",ojos:"azules",gafas:true,barba:false},
+ {nombre:"Pedro",sexo:"m",talla:"alto",cuerpo:"gordito",pelo:"pelirrojo",largo:"corto",forma:"liso",ojos:"verdes",gafas:false,barba:true},
+ {nombre:"Isa",sexo:"f",talla:"bajo",cuerpo:"delgado",pelo:"castano",largo:"largo",forma:"ondulado",ojos:"marrones",gafas:false,barba:false}
+];
+</script>
+<script>
+/* ---- taille du texte ---- */
+let fs=20;const setFs=()=>document.documentElement.style.setProperty('--fs',fs+'px');
+document.getElementById('aPlus').onclick=()=>{fs=Math.min(28,fs+2);setFs();};
+document.getElementById('aMoins').onclick=()=>{fs=Math.max(16,fs-2);setFs();};
+
+/* ---- voix espagnole ---- */
+function dire(t){try{const s=window.speechSynthesis;if(!s)return;s.cancel();const u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,''));u.lang='es-ES';u.rate=.8;
+  const v=s.getVoices().find(v=>/^es(-|_)ES/i.test(v.lang))||s.getVoices().find(v=>/^es/i.test(v.lang));if(v)u.voice=v;s.speak(u);}catch(e){}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(b)dire(b.dataset.say);});
+
+/* ---- navigation ---- */
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#nav button,section').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');document.getElementById(b.dataset.s).classList.add('on');window.scrollTo({top:0});});
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const fin=w=>w.replace(/(o|a)$/,m=>`<b class="${m==='a'?'fem':'masc'}">${m}</b>`);
+
+/* ---- 1 mots ---- */
+const CATS=[
+ ["📏 La taille",[["alto / alta","grand(e)","↕️"],["bajo / baja","petit(e)","🔽"]]],
+ ["🧍 Le corps",[["delgado / delgada","mince","➖"],["gordito / gordita","un peu rond(e)","⭕"]]],
+ ["🎨 La couleur des cheveux",[["moreno / morena","brun(e)","🟫"],["rubio / rubia","blond(e)","🟨"],["castaño / castaña","châtain","🟤"],["pelirrojo / pelirroja","roux / rousse","🟧"]]],
+ ["💇 Les cheveux : el pelo",[["largo","longs","〰️"],["corto","courts","✂️"],["liso","raides","｜"],["rizado","frisés","🌀"],["ondulado","ondulés","🌊"]]],
+ ["👀 Les yeux : los ojos",[["negros","noirs","⚫"],["azules","bleus","🔵"],["verdes","verts","🟢"],["marrones","marron","🟤"]]],
+ ["👓 Ce qu'on porte",[["lleva gafas","il/elle porte des lunettes","👓"],["lleva barba","il porte une barbe","🧔"]]]
+];
+document.getElementById('listeMots').innerHTML=CATS.map(([t,ws])=>`<div class="cat"><h3>${t}</h3>${ws.map(([es,fr,p])=>{
+  const aff=es.includes(' / ')?es.split(' / ').map(fin).join(' / '):es;
+  return `<div class="mot"><span class="pic">${p}</span><span class="es">${aff}</span><span class="fr">${fr}</span><button class="son" data-say="${es.replace(' / ',', ')}">🔊</button></div>`;}).join('')}</div>`).join('');
+
+/* ---- 3 persos ---- */
+const gp=document.getElementById('grillePersos');
+PERSOS.forEach((p,i)=>{const d=document.createElement('div');d.className='perso';d.innerHTML=avatar(p,170)+`<div class="nom">${p.nombre}</div>`;
+  d.onclick=()=>{const z=document.getElementById('descPerso');z.classList.add('on');
+    z.innerHTML=`<button class="son" data-say="${descr(p,false)}">🔊</button><span>${descr(p,true)}</span>`;dire(descr(p,false));
+    document.querySelectorAll('.perso').forEach(x=>x.style.borderColor='');d.style.borderColor='var(--teal)';};gp.appendChild(d);});
+
+/* ---- 4 ¿Quién es? ---- */
+// des phrases courtes, un indice à la fois, puis la description complète
+const QS=[
+ {t:"Lleva barba.",a:"Pedro"},{t:"Es rubia.",a:"Ana"},{t:"Tiene los ojos negros.",a:"Luis"},
+ {t:"Es castaña con el pelo ondulado.",a:"Isa"},{t:"Lleva gafas.",a:"Ana"},{t:"Es pelirrojo.",a:"Pedro"},
+ {t:"Es alto y delgado.",a:"Luis"},{t:"Tiene los ojos marrones.",a:"Isa"},{t:"Es baja y gordita.",a:"Ana"},{t:"Es moreno con el pelo rizado.",a:"Luis"}];
+let qi=0,qs=0,qOrder=shuffle(QS);
+function quien(){
+  const z=document.getElementById('qZone');document.getElementById('qProg').style.width=(qi/qOrder.length*100)+'%';
+  if(qi>=qOrder.length){z.innerHTML=`<p style="text-align:center;font:700 1.2em Lexend;color:var(--ok)">${qs} / ${qOrder.length} ${qs>=8?'🎉 ¡Muy bien!':'💪 ¡Otra vez!'}</p><div style="text-align:center"><button class="btn" id="qAgain">Rejouer</button></div>`;
+    document.getElementById('qAgain').onclick=()=>{qi=0;qs=0;qOrder=shuffle(QS);quien();};return;}
+  const Q=qOrder[qi];let rep=false;
+  z.innerHTML=`<div class="phrase"><button class="son" data-say="${Q.t}">🔊</button><span>${Q.t}</span></div><div class="choix4" id="q4"></div><div class="fb" id="qFb"></div>`;
+  dire(Q.t);
+  shuffle(PERSOS).forEach(p=>{const b=document.createElement('button');b.innerHTML=avatar(p,120)+`<div style="font:700 .8em Lexend">${p.nombre}</div>`;
+    b.onclick=()=>{if(rep)return;const fb=document.getElementById('qFb');
+      if(p.nombre===Q.a){rep=true;b.classList.add('good');qs+=b.dataset.err?0:1;fb.className='fb ok';fb.textContent='✓ ¡Sí! Es '+Q.a+'.';dire('Sí, es '+Q.a);setTimeout(()=>{qi++;quien();},1400);}
+      else{b.classList.add('bad');b.dataset.err=1;[...document.querySelectorAll('#q4 button')].forEach(x=>x.dataset.err=1);fb.className='fb ko';fb.textContent='Non, regarde bien encore une fois.';}};
+    document.getElementById('q4').appendChild(b);});
+}
+quien();
+
+/* ---- 5 -o / -a ---- */
+const OA=[["alt","f","alto"],["baj","m","bajo"],["delgad","f","delgado"],["gordit","m","gordito"],["moren","f","moreno"],["rubi","m","rubio"],["castañ","f","castaño"],["pelirroj","m","pelirrojo"],["rubi","f","rubio"],["alt","m","alto"]];
+let oi=0,oOrder=shuffle(OA);
+function oa(){
+  const z=document.getElementById('oaZone');document.getElementById('oaProg').style.width=(oi/oOrder.length*100)+'%';
+  if(oi>=oOrder.length){z.innerHTML=`<p style="text-align:center;font:700 1.2em Lexend;color:var(--ok)">🎉 Terminé !</p><div style="text-align:center"><button class="btn" id="oAgain">Rejouer</button></div>`;document.getElementById('oAgain').onclick=()=>{oi=0;oOrder=shuffle(OA);oa();};return;}
+  const [rac,sx]=oOrder[oi];const qui=sx==='f'?'👧 Es una chica (une fille)':'👦 Es un chico (un garçon)';
+  z.innerHTML=`<p style="text-align:center;font-weight:700">${qui}</p><div class="mot-oa">Es ${rac}<span class="trou" id="trou">&nbsp;</span></div><div class="oa" id="oaB"></div><div class="fb" id="oaFb" style="text-align:center"></div>`;
+  const ord=Math.random()<.5?['o','a']:['a','o'];let rep=false;
+  ord.forEach(l=>{const b=document.createElement('button');b.textContent=l;b.className=l==='a'?'fem':'masc';
+    b.onclick=()=>{if(rep)return;const ok=(l==='a')===(sx==='f');const fb=document.getElementById('oaFb');
+      if(ok){rep=true;b.classList.add('good');document.getElementById('trou').innerHTML=`<b class="${l==='a'?'fem':'masc'}">${l}</b>`;fb.className='fb ok';fb.textContent='✓ ¡Bien!';dire('Es '+rac+l);setTimeout(()=>{oi++;oa();},1300);}
+      else{b.classList.add('bad');fb.className='fb ko';fb.textContent=sx==='f'?'C\'est une fille → -a':'C\'est un garçon → -o';}};
+    document.getElementById('oaB').appendChild(b);});
+}
+oa();
+
+/* ---- 6 construis ---- */
+const CS=[["Ana","es","baja","y","rubia."],["Pedro","lleva","barba."],["Luis","tiene","los ojos","negros."],["Isa","no","lleva","gafas."],["Isa","es","castaña","con el pelo","largo."],["Pedro","es","alto","y","pelirrojo."]];
+let ci=0;
+function construis(){
+  const z=document.getElementById('cZone');document.getElementById('cProg').style.width=(ci/CS.length*100)+'%';
+  if(ci>=CS.length){z.innerHTML=`<p style="text-align:center;font:700 1.2em Lexend;color:var(--ok)">🎉 ¡Perfecto!</p><div style="text-align:center"><button class="btn" id="cAgain">Rejouer</button></div>`;document.getElementById('cAgain').onclick=()=>{ci=0;construis();};return;}
+  const bonne=CS[ci];const posees=[];
+  z.innerHTML=`<div class="zone" id="cDst"></div><div class="tuiles" id="cSrc"></div><div style="margin-top:12px;display:flex;gap:8px"><button class="btn" id="cOk">Vérifier</button><button class="son" data-say="${bonne.join(' ')}" title="Écouter la phrase">🔊</button></div><div class="fb" id="cFb"></div>`;
+  const src=document.getElementById('cSrc'),dst=document.getElementById('cDst');
+  shuffle(bonne.map((w,i)=>({w,i}))).forEach(o=>{const t=document.createElement('button');t.className='tuile';t.textContent=o.w;
+    t.onclick=()=>{if(t.parentNode===src){dst.appendChild(t);}else{src.appendChild(t);}};src.appendChild(t);});
+  document.getElementById('cOk').onclick=()=>{const rep=[...dst.children].map(x=>x.textContent);const fb=document.getElementById('cFb');
+    if(rep.join(' ')===bonne.join(' ')){fb.className='fb ok';fb.textContent='✓ ¡Muy bien!';dire(bonne.join(' '));setTimeout(()=>{ci++;construis();},1500);}
+    else{fb.className='fb ko';fb.textContent=rep.length<bonne.length?'Il manque des mots.':'Presque ! Rappel : qui → verbe → description.';}};
+}
+construis();
+
+/* ---- 7 créateur ---- */
+const cr={nombre:"Mi personaje",sexo:"m",talla:"alto",cuerpo:"delgado",pelo:"moreno",largo:"corto",forma:"liso",ojos:"verdes",gafas:false,barba:false};
+const OPTS=[
+ ["sexo","👦👧 Garçon ou fille",[["m","chico"],["f","chica"]]],
+ ["talla","📏 La taille",[["alto","alto/a"],["bajo","bajo/a"]]],
+ ["cuerpo","🧍 Le corps",[["delgado","delgado/a"],["gordito","gordito/a"]]],
+ ["pelo","🎨 Les cheveux",[["moreno","moreno/a"],["rubio","rubio/a"],["castano","castaño/a"],["pelirrojo","pelirrojo/a"]]],
+ ["largo","✂️ Longueur",[["corto","corto"],["largo","largo"]]],
+ ["forma","🌀 Forme",[["liso","liso"],["rizado","rizado"],["ondulado","ondulado"]]],
+ ["ojos","👀 Les yeux",[["negros","negros"],["azules","azules"],["verdes","verdes"],["marrones","marrones"]]],
+ ["gafas","👓 Lunettes",[[true,"sí"],[false,"no"]]],
+ ["barba","🧔 Barbe",[[true,"sí"],[false,"no"]]]
+];
+function crRender(){
+  cr.nombre=cr.sexo==='f'?'Mi personaje':'Mi personaje';
+  document.getElementById('crApercu').innerHTML=avatar(cr,220);
+  const t=descr(Object.assign({},cr,{nombre:cr.sexo==='f'?'Ella':'Él'}),true);
+  document.getElementById('crTxt').innerHTML=t;
+  document.getElementById('crSon').onclick=()=>dire(descr(Object.assign({},cr,{nombre:cr.sexo==='f'?'Ella':'Él'}),false));
+  document.getElementById('crOpts').innerHTML=OPTS.filter(o=>!(o[0]==='barba'&&cr.sexo==='f')).map(([k,lab,vs])=>`<div class="opt"><div class="lab">${lab}</div><div class="bs">${vs.map(([v,l])=>`<button data-k="${k}" data-v="${v}" class="${String(cr[k])===String(v)?'on':''}">${l}</button>`).join('')}</div></div>`).join('');
+  document.querySelectorAll('#crOpts button').forEach(b=>b.onclick=()=>{let v=b.dataset.v;if(v==='true')v=true;if(v==='false')v=false;cr[b.dataset.k]=v;if(cr.sexo==='f')cr.barba=false;crRender();});
+}
+crRender();
+</script>
+</body>
+</html>
